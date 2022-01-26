@@ -18,6 +18,10 @@ class CreateTransactionService {
 
     const { total } = this.transactionsRepository.getBalance();
 
+    if (!['income', 'outcome'].includes(type)){
+      throw new Error('Transacion type not supported');
+    }
+
     if (type === 'outcome' && total < value) {
       throw new Error('you do not have enough money for this transaction');
     }
@@ -26,7 +30,7 @@ class CreateTransactionService {
       title,
       value,
       type,
-    })
+    });
 
     return transaction;
 
